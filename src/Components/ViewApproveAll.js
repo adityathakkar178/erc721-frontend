@@ -7,6 +7,7 @@ const ViewApprove = ({ contract }) => {
     const [ownerAddress, setOwnerAddress] = useState('');
     const [operatorAddress, setOperatorAddress] = useState('');
     const [approved, setApproved] = useState(false);
+    const [error, setError] = useState('');
 
     const handleOwner = (e) => {
         setOwnerAddress(e.target.value);
@@ -16,15 +17,33 @@ const ViewApprove = ({ contract }) => {
         setOperatorAddress(e.target.value);
     };
 
+    const validateInputs = () => {
+        if (!ownerAddress.trim()) {
+            setError('Owner address can not be empty');
+            return false;
+        }
+        if (!operatorAddress.trim()) {
+            setError('Operator Address can not be empty');
+            return false;
+        }
+        return true;
+    };
+
+    const clearError = () => {
+        setError('');
+    };
+
     const checkApproval = (e) => {
-        contract
-            .isApprovedForAll(ownerAddress, operatorAddress)
-            .then((result) => {
-                setApproved(result);
-            })
-            .catch((err) => {
-                console.error('Error getting approval', err);
-            });
+        if (validateInputs()) {
+            contract
+                .isApprovedForAll(ownerAddress, operatorAddress)
+                .then((result) => {
+                    setApproved(result);
+                })
+                .catch((err) => {
+                    console.error('Error getting approval', err);
+                });
+        }
     };
 
     return (
@@ -37,6 +56,7 @@ const ViewApprove = ({ contract }) => {
                     placeholder="Enter Owner Address"
                     value={ownerAddress}
                     onChange={handleOwner}
+                    onFocus={clearError}
                 />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicOperatorAddress">
@@ -46,7 +66,11 @@ const ViewApprove = ({ contract }) => {
                     placeholder="Enter Operator Address"
                     value={operatorAddress}
                     onChange={handleOperator}
+                    onFocus={clearError}
                 />
+                {error && (
+                    <Form.Text className="text-danger">{error}</Form.Text>
+                )}
             </Form.Group>
             <Button onClick={checkApproval}>Check</Button>
             {approved !== null &&
