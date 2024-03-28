@@ -41,7 +41,7 @@ const ViewApprove = ({ contract }) => {
                     setApproved(result);
                 })
                 .catch((err) => {
-                    console.error('Error getting approval', err);
+                    setError('Error getting approval');
                 });
         }
     };
