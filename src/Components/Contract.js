@@ -11,6 +11,7 @@ import GetApprove from './GetApproved';
 import ApproveForAll from './ApproveAll';
 import ViewApprove from './ViewApproveAll';
 import TransferTokens from './Transfer';
+import URI from './TokenURI';
 
 const Contract = () => {
     const [abi, setAbi] = useState('');
@@ -106,6 +107,11 @@ const Contract = () => {
                 <div class="card border-0 ">
                     <div class="card-body">
                         <TransferTokens contract={contract} />
+                    </div>
+                </div>
+                <div class="card border-0 ">
+                    <div class="card-body">
+                        <URI contract={contract} />
                     </div>
                 </div>
             </div>
