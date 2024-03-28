@@ -44,6 +44,10 @@ const TransferTokens = ({ contract }) => {
         return true;
     };
 
+    const clearError = () => {
+        setError('');
+    };
+
     const Transfer = () => {
         if (validateInputs()) {
             contract
@@ -55,10 +59,6 @@ const TransferTokens = ({ contract }) => {
                     setError('Error Transfering Tokens');
                 });
         }
-    };
-
-    const clearError = () => {
-        setError('');
     };
 
     return (
