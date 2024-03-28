@@ -5,6 +5,7 @@ import Card from 'react-bootstrap/Card';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Balance from './Balance';
 import MintTokens from './Mint';
+import Owner from './Owner';
 
 const Contract = () => {
     const [abi, setAbi] = useState('');
@@ -58,12 +59,17 @@ const Contract = () => {
             <h3>ERC721 Contract</h3>
 
             <div class="card-group">
-                <div class="card">
+                <div class="card border-0 ">
                     <div class="card-body">
                         <Balance contract={contract} />
                     </div>
                 </div>
-                <div class="card">
+                <div class="card border-0 ">
+                    <div class="card-body">
+                        <Owner contract={contract} />
+                    </div>
+                </div>
+                <div class="card border-0">
                     <div class="card-body">
                         <MintTokens contract={contract} />
                     </div>
