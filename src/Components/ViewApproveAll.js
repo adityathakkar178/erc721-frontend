@@ -49,10 +49,17 @@ const ViewApprove = ({ contract }) => {
                 />
             </Form.Group>
             <Button onClick={checkApproval}>Check</Button>
-            <h6>
-                Operator {operatorAddress} {approved ? 'is' : 'is not'} approved
-                for all tokens by owner {ownerAddress}
-            </h6>
+            {approved !== null &&
+                approved !== '' &&
+                operatorAddress !== null &&
+                operatorAddress !== '' &&
+                ownerAddress !== null &&
+                ownerAddress !== '' && (
+                    <h6>
+                        Operator {operatorAddress} {approved ? 'is' : 'is not'}{' '}
+                        approved for all tokens by owner {ownerAddress}
+                    </h6>
+                )}
         </Form>
     );
 };
