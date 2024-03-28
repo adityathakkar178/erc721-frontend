@@ -4,6 +4,7 @@ import { ethers } from 'ethers';
 import Card from 'react-bootstrap/Card';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Balance from './Balance';
+import MintTokens from './Mint';
 
 const Contract = () => {
     const [abi, setAbi] = useState('');
@@ -60,6 +61,11 @@ const Contract = () => {
                 <div class="card">
                     <div class="card-body">
                         <Balance contract={contract} />
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <MintTokens contract={contract} />
                     </div>
                 </div>
             </div>

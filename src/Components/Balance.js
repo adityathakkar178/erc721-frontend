@@ -22,13 +22,12 @@ const Balance = ({ contract }) => {
             });
     };
     return (
-        <div>
             <Form className={classes.form}>
                 <h3>Check Balance</h3>
                 <Form.Group className="mb-3" controlId="formBasicAddress">
                     <Form.Label>Enter address</Form.Label>
                     <Form.Control
-                        type="email"
+                        type="text"
                         placeholder="Enter Address"
                         value={address}
                         onChange={handleChange}
@@ -41,7 +40,6 @@ const Balance = ({ contract }) => {
                     </h6>
                 )}
             </Form>
-        </div>
     );
 };
 
