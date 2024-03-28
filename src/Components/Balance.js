@@ -6,19 +6,28 @@ import classes from './Form.module.css';
 const Balance = ({ contract }) => {
     const [address, setAddress] = useState('');
     const [balance, setBalance] = useState('');
+    const [error, setError] = useState('');
 
     const handleChange = (e) => {
         setAddress(e.target.value);
     };
 
+    const isValidAddress = (address) => {
+        return /^(0x)?[0-9a-fA-F]{40}$/.test(address);
+    };
+
     const getBalance = () => {
+        if (!isValidAddress(address)) {
+            setError('Invalid Address');
+            return;
+        }
         contract
             .balanceOf(address)
             .then((balance) => {
                 setBalance(balance.toString());
             })
             .catch((err) => {
-                console.log('Error fetching balance', err);
+                setError('Error Fetching Balance');
             });
     };
     return (
@@ -32,6 +41,9 @@ const Balance = ({ contract }) => {
                     value={address}
                     onChange={handleChange}
                 />
+                {error && (
+                    <Form.Text className="text-danger">{error}</Form.Text>
+                )}
             </Form.Group>
             <Button onClick={getBalance}>Get balance</Button>
             {balance !== null && balance !== '' && (
