@@ -18,6 +18,10 @@ const Owner = ({ contract }) => {
         }
     };
 
+    const clearError = () => {
+        setError('');
+    };
+
     const getOwner = () => {
         if (!id) {
             setError('Please enter an ID');
@@ -43,6 +47,7 @@ const Owner = ({ contract }) => {
                     placeholder="Enter Id"
                     value={id}
                     onChange={handleId}
+                    onFocus={clearError}
                     onKeyUp={(e) => {
                         const key = e.key;
                         const onlyNumbers = /^[0-9\b]+$/;

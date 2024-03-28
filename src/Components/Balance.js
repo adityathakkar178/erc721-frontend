@@ -16,6 +16,10 @@ const Balance = ({ contract }) => {
         return /^(0x)?[0-9a-fA-F]{40}$/.test(address);
     };
 
+    const clearError = () => {
+        setError('');
+    };
+
     const getBalance = () => {
         if (!isValidAddress(address)) {
             setError('Invalid Address');
@@ -40,6 +44,7 @@ const Balance = ({ contract }) => {
                     placeholder="Enter Address"
                     value={address}
                     onChange={handleChange}
+                    onFocus={clearError}
                 />
                 {error && (
                     <Form.Text className="text-danger">{error}</Form.Text>

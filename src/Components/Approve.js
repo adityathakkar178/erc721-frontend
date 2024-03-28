@@ -7,6 +7,7 @@ const Approve = ({ contract }) => {
     const [address, setAddress] = useState('');
     const [id, setId] = useState('');
     const [transaction, setTransaction] = useState('');
+    const [error, setError] = useState('');
 
     const handleAddress = (e) => {
         setAddress(e.target.value);
@@ -16,15 +17,33 @@ const Approve = ({ contract }) => {
         setId(e.target.value);
     };
 
+    const validateInputs = () => {
+        if (!address.trim()) {
+            setError('Address cannot be empty');
+            return false;
+        }
+        if (isNaN(id) || id <= 0) {
+            setError('ID must be a positive number');
+            return false;
+        }
+        return true;
+    };
+
+    const clearError = () => {
+        setError('');
+    };
+
     const ApproveSpender = () => {
-        contract
-            .approve(address, id)
-            .then((transaction) => {
-                setTransaction(transaction.hash);
-            })
-            .catch((err) => {
-                console.error('Error approving spender', err);
-            });
+        if (validateInputs()) {
+            contract
+                .approve(address, id)
+                .then((transaction) => {
+                    setTransaction(transaction.hash);
+                })
+                .catch((err) => {
+                    setError('Error approving spender');
+                });
+        }
     };
 
     return (
@@ -37,17 +56,20 @@ const Approve = ({ contract }) => {
                     placeholder="Enter Address"
                     value={address}
                     onChange={handleAddress}
+                    onFocus={clearError}
                 />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicId">
                 <Form.Label>Enter Id</Form.Label>
                 <Form.Control
-                    type="Numebr"
+                    type="number"
                     placeholder="Enter Id"
                     value={id}
                     onChange={handleId}
+                    onFocus={clearError}
                 />
             </Form.Group>
+            {error && <p style={{ color: 'red' }}>{error}</p>}
             <Button onClick={ApproveSpender}>Approve</Button>
         </Form>
     );
