@@ -8,6 +8,7 @@ import MintTokens from './Mint';
 import Owner from './Owner';
 import Approve from './Approve';
 import GetApprove from './GetApproved';
+import ApproveForAll from './ApproveAll';
 
 const Contract = () => {
     const [abi, setAbi] = useState('');
@@ -83,10 +84,14 @@ const Contract = () => {
                         <Approve contract={contract} />
                     </div>
                 </div>
-                
                 <div class="card border-0">
                     <div class="card-body">
                         <MintTokens contract={contract} />
+                    </div>
+                </div>
+                <div class="card border-0">
+                    <div class="card-body">
+                        <ApproveForAll contract={contract} />
                     </div>
                 </div>
             </div>
