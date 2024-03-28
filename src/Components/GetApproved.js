@@ -24,7 +24,7 @@ const GetApprove = ({ contract }) => {
 
     return (
         <Form className={classes.form}>
-            <h3>Get Approved Sepnder </h3>
+            <h3>Get Sepnder </h3>
             <Form.Group className="mb-3" controlId="formBasicId">
                 <Form.Label>Enter Id</Form.Label>
                 <Form.Control

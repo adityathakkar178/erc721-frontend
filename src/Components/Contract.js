@@ -71,9 +71,9 @@ const Contract = () => {
                         <Owner contract={contract} />
                     </div>
                 </div>
-                <div class="card border-0">
+                <div class="card border-0 ">
                     <div class="card-body">
-                        <MintTokens contract={contract} />
+                        <GetApprove contract={contract} />
                     </div>
                 </div>
             </div>
@@ -83,9 +83,10 @@ const Contract = () => {
                         <Approve contract={contract} />
                     </div>
                 </div>
-                <div class="card border-0 ">
+                
+                <div class="card border-0">
                     <div class="card-body">
-                        <GetApprove contract={contract} />
+                        <MintTokens contract={contract} />
                     </div>
                 </div>
             </div>
