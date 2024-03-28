@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { ethers } from 'ethers';
 import Card from 'react-bootstrap/Card';
+import classes from './Connect.module.css';
 
-const Connect = () => {
+const Connect = (props) => {
     const [connect, setConnect] = useState('');
     const [balance, setBalance] = useState('');
 
@@ -25,7 +26,7 @@ const Connect = () => {
                                         const etherBalance =
                                             ethers.utils.formatEther(balance);
                                         setBalance(etherBalance);
-                                        // props.onConnect();
+                                        props.onConnect();
                                     })
                                     .catch((error) => {
                                         setBalance('Error getting balance');
@@ -48,11 +49,11 @@ const Connect = () => {
     };
     return (
         <Card>
-            <div>
-                <h1>Connect Metamask wallet</h1>
+            <div className={classes.container}>
+                <h1 className={classes.title}>Connect Metamask wallet</h1>
                 {/* <h1>address : {connect}</h1>
             <h1>Balance : {balance}</h1> */}
-                <button onClick={connectWallet}>Connect</button>
+                <button className={classes.button} onClick={connectWallet} >Connect</button>
             </div>
         </Card>
     );
