@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Balance from './Balance';
 import MintTokens from './Mint';
 import Owner from './Owner';
+import Approve from './Approve';
 
 const Contract = () => {
     const [abi, setAbi] = useState('');
@@ -72,6 +73,13 @@ const Contract = () => {
                 <div class="card border-0">
                     <div class="card-body">
                         <MintTokens contract={contract} />
+                    </div>
+                </div>
+            </div>
+            <div class="card-group">
+                <div class="card border-0 ">
+                    <div class="card-body">
+                        <Approve contract={contract} />
                     </div>
                 </div>
             </div>
