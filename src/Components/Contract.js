@@ -45,7 +45,7 @@ const Contract = () => {
                     const signer = provider.getSigner();
                     console.log(signer.getAddress());
                     const contractAddress =
-                        '0x5fbdb2315678afecb367f032d93f642f64180aa3';
+                        '0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9';
                     const contract = new ethers.Contract(
                         contractAddress,
                         abi,
@@ -72,7 +72,7 @@ const Contract = () => {
                         </Card.Body>
                     </Card>
                 </div>
-                <div className="col-md-4">
+                <div className="col-md-3">
                     <Card className="border-0">
                         <Card.Body>
                             <Owner contract={contract} />
@@ -95,10 +95,10 @@ const Contract = () => {
                         </Card.Body>
                     </Card>
                 </div>
-                <div className="col-md-4">
+                <div className="col-md-3">
                     <Card className="border-0">
                         <Card.Body>
-                            <MintTokens contract={contract} />
+                            <ViewApprove contract={contract} />
                         </Card.Body>
                     </Card>
                 </div>
@@ -114,11 +114,11 @@ const Contract = () => {
                 <div className="col-md-4">
                     <Card className="border-0">
                         <Card.Body>
-                            <ViewApprove contract={contract} />
+                            <MintTokens contract={contract} />
                         </Card.Body>
                     </Card>
                 </div>
-                <div className="col-md-4">
+                <div className="col-md-3">
                     <Card className="border-0">
                         <Card.Body>
                             <TransferTokens contract={contract} />

@@ -2,11 +2,12 @@ import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import classes from './Form.module.css';
+import axios from 'axios';
 
 const MintTokens = ({ contract }) => {
     const [name, setName] = useState('');
     const [uri, setUri] = useState('');
-    const [transaction, setTransaction] = useState('');
+    const [image, setImage] = useState(null);
     const [error, setError] = useState('');
 
     const handleName = (e) => {
@@ -15,6 +16,10 @@ const MintTokens = ({ contract }) => {
 
     const handleUri = (e) => {
         setUri(e.target.value);
+    };
+
+    const handleImageChange = (e) => {
+        setImage(e.target.files[0]);
     };
 
     const validateInputs = () => {
@@ -26,6 +31,10 @@ const MintTokens = ({ contract }) => {
             setError('URI cannot be empty');
             return false;
         }
+        if (!image) {
+            setError('Please select an image');
+            return false;
+        }
         return true;
     };
 
@@ -35,12 +44,20 @@ const MintTokens = ({ contract }) => {
 
     const mintTokens = () => {
         if (validateInputs()) {
-            contract
-                .mint(name, uri)
-                .then((transaction) => {
-                    setTransaction(transaction.hash);
+            const formData = new FormData();
+            formData.append('name', name);
+            formData.append('uri', uri);
+            formData.append('image', image);
+            axios
+                .post('http://localhost:3004/mint', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
                 })
-                .catch((err) => {
+                .then(() => {
+                    return contract.mint(name, uri);
+                })
+                .catch((error) => {
                     setError('Error minting tokens');
                 });
         }
@@ -68,11 +85,18 @@ const MintTokens = ({ contract }) => {
                     onChange={handleUri}
                     onFocus={clearError}
                 />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicImage">
+                <Form.Label>Upload Image</Form.Label>
+                <Form.Control
+                    type="file"
+                    onChange={handleImageChange}
+                    onFocus={clearError}
+                />
                 {error && (
                     <Form.Text className="text-danger">{error}</Form.Text>
                 )}
             </Form.Group>
-
             <Button onClick={mintTokens}>Mint Tokens</Button>
         </Form>
     );
