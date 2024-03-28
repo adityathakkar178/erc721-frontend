@@ -14,7 +14,13 @@ const Approve = ({ contract }) => {
     };
 
     const handleId = (e) => {
-        setId(e.target.value);
+        const inputValue = e.target.value;
+        const onlyNumbers = /^\d*$/;
+        if (onlyNumbers.test(inputValue)) {
+            setId(inputValue);
+        } else {
+            setError('Please enter only numbers');
+        }
     };
 
     const validateInputs = () => {
@@ -22,8 +28,8 @@ const Approve = ({ contract }) => {
             setError('Address cannot be empty');
             return false;
         }
-        if (isNaN(id) || id <= 0) {
-            setError('ID must be a positive number');
+        if (!id) {
+            setError('Please enter an ID');
             return false;
         }
         return true;
@@ -62,11 +68,18 @@ const Approve = ({ contract }) => {
             <Form.Group className="mb-3" controlId="formBasicId">
                 <Form.Label>Enter Id</Form.Label>
                 <Form.Control
-                    type="number"
+                    type="text"
                     placeholder="Enter Id"
                     value={id}
                     onChange={handleId}
                     onFocus={clearError}
+                    onKeyUp={(e) => {
+                        const key = e.key;
+                        const onlyNumbers = /^[0-9\b]+$/;
+                        if (!onlyNumbers.test(key)) {
+                            e.preventDefault();
+                        }
+                    }}
                 />
                 {error && (
                     <Form.Text className="text-danger">{error}</Form.Text>
