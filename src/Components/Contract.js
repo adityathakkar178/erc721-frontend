@@ -64,55 +64,73 @@ const Contract = () => {
         <>
             <h3>ERC721 Contract</h3>
 
-            <div class="card-group">
-                <div class="card border-0 ">
-                    <div class="card-body">
-                        <Balance contract={contract} />
-                    </div>
+            <div className="row">
+                <div className="col-md-4">
+                    <Card className="border-0">
+                        <Card.Body>
+                            <Balance contract={contract} />
+                        </Card.Body>
+                    </Card>
                 </div>
-                <div class="card border-0 ">
-                    <div class="card-body">
-                        <Owner contract={contract} />
-                    </div>
+                <div className="col-md-4">
+                    <Card className="border-0">
+                        <Card.Body>
+                            <Owner contract={contract} />
+                        </Card.Body>
+                    </Card>
                 </div>
-                <div class="card border-0 ">
-                    <div class="card-body">
-                        <GetApprove contract={contract} />
-                    </div>
-                </div>
-            </div>
-            <div class="card-group">
-                <div class="card border-0 ">
-                    <div class="card-body">
-                        <Approve contract={contract} />
-                    </div>
-                </div>
-                <div class="card border-0">
-                    <div class="card-body">
-                        <MintTokens contract={contract} />
-                    </div>
-                </div>
-                <div class="card border-0">
-                    <div class="card-body">
-                        <ApproveForAll contract={contract} />
-                    </div>
+                <div className="col-md-4">
+                    <Card className="border-0">
+                        <Card.Body>
+                            <GetApprove contract={contract} />
+                        </Card.Body>
+                    </Card>
                 </div>
             </div>
-            <div class="card-group">
-                <div class="card border-0 ">
-                    <div class="card-body">
-                        <ViewApprove contract={contract} />
-                    </div>
+            <div className="row">
+                <div className="col-md-4">
+                    <Card className="border-0">
+                        <Card.Body>
+                            <Approve contract={contract} />
+                        </Card.Body>
+                    </Card>
                 </div>
-                <div class="card border-0 ">
-                    <div class="card-body">
-                        <TransferTokens contract={contract} />
-                    </div>
+                <div className="col-md-4">
+                    <Card className="border-0">
+                        <Card.Body>
+                            <MintTokens contract={contract} />
+                        </Card.Body>
+                    </Card>
                 </div>
-                <div class="card border-0 ">
-                    <div class="card-body">
-                        <URI contract={contract} />
-                    </div>
+                <div className="col-md-4">
+                    <Card className="border-0">
+                        <Card.Body>
+                            <ApproveForAll contract={contract} />
+                        </Card.Body>
+                    </Card>
+                </div>
+            </div>
+            <div className="row">
+                <div className="col-md-4">
+                    <Card className="border-0">
+                        <Card.Body>
+                            <ViewApprove contract={contract} />
+                        </Card.Body>
+                    </Card>
+                </div>
+                <div className="col-md-4">
+                    <Card className="border-0">
+                        <Card.Body>
+                            <TransferTokens contract={contract} />
+                        </Card.Body>
+                    </Card>
+                </div>
+                <div className="col-md-4">
+                    <Card className="border-0">
+                        <Card.Body>
+                            <URI contract={contract} />
+                        </Card.Body>
+                    </Card>
                 </div>
             </div>
         </>
