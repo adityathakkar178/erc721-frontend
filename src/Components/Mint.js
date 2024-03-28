@@ -68,8 +68,11 @@ const MintTokens = ({ contract }) => {
                     onChange={handleUri}
                     onFocus={clearError}
                 />
+                {error && (
+                    <Form.Text className="text-danger">{error}</Form.Text>
+                )}
             </Form.Group>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
+
             <Button onClick={mintTokens}>Mint Tokens</Button>
         </Form>
     );

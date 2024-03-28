@@ -68,8 +68,10 @@ const Approve = ({ contract }) => {
                     onChange={handleId}
                     onFocus={clearError}
                 />
+                {error && (
+                    <Form.Text className="text-danger">{error}</Form.Text>
+                )}
             </Form.Group>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
             <Button onClick={ApproveSpender}>Approve</Button>
         </Form>
     );

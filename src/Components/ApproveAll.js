@@ -6,7 +6,8 @@ import classes from './Form.module.css';
 const ApproveForAll = ({ contract }) => {
     const [address, setAddress] = useState('');
     const [approve, setApprove] = useState(false);
-    const [transaction, setTrnasaction] = useState('');
+    const [transaction, setTransaction] = useState('');
+    const [error, setError] = useState('');
 
     const handleAddress = (e) => {
         setAddress(e.target.value);
@@ -16,15 +17,29 @@ const ApproveForAll = ({ contract }) => {
         setApprove(e.target.checked);
     };
 
+    const validateInputs = () => {
+        if (!address.trim()) {
+            setError('Address cannot be empty');
+            return false;
+        }
+        return true;
+    };
+
+    const clearError = () => {
+        setError('');
+    };
+
     const ApproveAll = () => {
-        contract
-            .setApprovalForAll(address, approve)
-            .then((transaction) => {
-                setTrnasaction(transaction.hash);
-            })
-            .catch((err) => {
-                console.error('Error approving tokens', err);
-            });
+        if (validateInputs()) {
+            contract
+                .setApprovalForAll(address, approve)
+                .then((transaction) => {
+                    setTransaction(transaction.hash);
+                })
+                .catch((err) => {
+                    setError('Error approving tokens');
+                });
+        }
     };
 
     return (
@@ -37,10 +52,14 @@ const ApproveForAll = ({ contract }) => {
                     placeholder="Enter Address"
                     value={address}
                     onChange={handleAddress}
+                    onFocus={clearError}
                 />
+                {error && (
+                    <Form.Text className="text-danger">{error}</Form.Text>
+                )}
             </Form.Group>
             <Form.Group className="mb-3" controlId="approveCheckbox">
-                <Form.Label>click check box to give approval</Form.Label>
+                <Form.Label>Click checkbox to give approval</Form.Label>
                 <Form.Check
                     type="checkbox"
                     label="Approve"
