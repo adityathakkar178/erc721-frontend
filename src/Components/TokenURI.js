@@ -35,10 +35,11 @@ const URI = ({ contract }) => {
                 />
             </Form.Group>
             <Button onClick={GetUri}>Get Owner</Button>
-
-            <h6>
-                URI of Token {id}: {uri}
-            </h6>
+            {uri !== null && uri !== '' && (
+                <h6>
+                    URI of Token {id}: {uri}
+                </h6>
+            )}
         </Form>
     );
 };

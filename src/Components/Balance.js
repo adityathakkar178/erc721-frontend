@@ -22,24 +22,24 @@ const Balance = ({ contract }) => {
             });
     };
     return (
-            <Form className={classes.form}>
-                <h3>Check Balance</h3>
-                <Form.Group className="mb-3" controlId="formBasicAddress">
-                    <Form.Label>Enter address</Form.Label>
-                    <Form.Control
-                        type="text"
-                        placeholder="Enter Address"
-                        value={address}
-                        onChange={handleChange}
-                    />
-                </Form.Group>
-                <Button onClick={getBalance}>Get balance</Button>
-                {balance !== null && (
-                    <h6>
-                        Token Balance of {address}: {balance}
-                    </h6>
-                )}
-            </Form>
+        <Form className={classes.form}>
+            <h3>Check Balance</h3>
+            <Form.Group className="mb-3" controlId="formBasicAddress">
+                <Form.Label>Enter address</Form.Label>
+                <Form.Control
+                    type="text"
+                    placeholder="Enter Address"
+                    value={address}
+                    onChange={handleChange}
+                />
+            </Form.Group>
+            <Button onClick={getBalance}>Get balance</Button>
+            {balance !== null && balance !== '' && (
+                <h6>
+                    Token Balance of {address}: {balance}
+                </h6>
+            )}
+        </Form>
     );
 };
 

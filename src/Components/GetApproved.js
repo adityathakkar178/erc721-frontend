@@ -35,10 +35,11 @@ const GetApprove = ({ contract }) => {
                 />
             </Form.Group>
             <Button onClick={allowance}>Get Owner</Button>
-
-            <h6>
-                Spender of Token {id}: {address}
-            </h6>
+            {address !== null && address !== '' && (
+                <h6>
+                    Spender of Token {id}: {address}
+                </h6>
+            )}
         </Form>
     );
 };

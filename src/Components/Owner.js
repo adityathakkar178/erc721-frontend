@@ -35,10 +35,11 @@ const Owner = ({ contract }) => {
                 />
             </Form.Group>
             <Button onClick={Owner}>Get Owner</Button>
-
-            <h6>
-                Owner of Token {id}: {address}
-            </h6>
+            {address !== null && address !== '' && (
+                <h6>
+                    Owner of Token {id}: {address}
+                </h6>
+            )}
         </Form>
     );
 };
