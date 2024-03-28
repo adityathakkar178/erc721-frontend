@@ -8,6 +8,7 @@ const TransferTokens = ({ contract }) => {
     const [toAddress, setToAddress] = useState('');
     const [id, setId] = useState('');
     const [transaction, setTransaction] = useState('');
+    const [error, setError] = useState('');
 
     const handleFrom = (e) => {
         setFromAddress(e.target.value);
@@ -18,18 +19,46 @@ const TransferTokens = ({ contract }) => {
     };
 
     const handleId = (e) => {
-        setId(e.target.value);
+        const inputValue = e.target.value;
+        const onlyNumbers = /^\d*$/;
+        if (onlyNumbers.test(inputValue)) {
+            setId(inputValue);
+        } else {
+            setError('Please enter only numbers');
+        }
+    };
+
+    const validateInputs = () => {
+        if (!fromAddress.trim()) {
+            setError('From address can not be empty');
+            return false;
+        }
+        if (!toAddress.trim()) {
+            setError('To Address can not be empty');
+            return false;
+        }
+        if (!id) {
+            setError('Please enter an ID');
+            return false;
+        }
+        return true;
     };
 
     const Transfer = () => {
-        contract
-            .transferFrom(fromAddress, toAddress, id)
-            .then((transaction) => {
-                setTransaction(transaction.hash);
-            })
-            .catch((err) => {
-                console.error('Error Transfering Tokens', err);
-            });
+        if (validateInputs()) {
+            contract
+                .transferFrom(fromAddress, toAddress, id)
+                .then((transaction) => {
+                    setTransaction(transaction.hash);
+                })
+                .catch((err) => {
+                    setError('Error Transfering Tokens');
+                });
+        }
+    };
+
+    const clearError = () => {
+        setError('');
     };
 
     return (
@@ -42,6 +71,7 @@ const TransferTokens = ({ contract }) => {
                     placeholder="Enter From Address"
                     value={fromAddress}
                     onChange={handleFrom}
+                    onFocus={clearError}
                 />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicTo">
@@ -51,6 +81,7 @@ const TransferTokens = ({ contract }) => {
                     placeholder="Enter To Address"
                     value={toAddress}
                     onChange={handleTo}
+                    onFocus={clearError}
                 />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicURI">
@@ -60,7 +91,18 @@ const TransferTokens = ({ contract }) => {
                     placeholder="Enter Id"
                     value={id}
                     onChange={handleId}
+                    onFocus={clearError}
+                    onKeyUp={(e) => {
+                        const key = e.key;
+                        const onlyNumbers = /^[0-9\b]+$/;
+                        if (!onlyNumbers.test(key)) {
+                            e.preventDefault();
+                        }
+                    }}
                 />
+                {error && (
+                    <Form.Text className="text-danger">{error}</Form.Text>
+                )}
             </Form.Group>
             <Button onClick={Transfer}>Mint Tokens</Button>
         </Form>
