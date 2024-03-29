@@ -45,7 +45,7 @@ const GetApprove = ({ contract }) => {
             <Form.Group className="mb-3" controlId="formBasicId">
                 <Form.Label>Enter Id</Form.Label>
                 <Form.Control
-                    type="text"
+                    type="number"
                     placeholder="Enter Id"
                     value={id}
                     onChange={handleId}
