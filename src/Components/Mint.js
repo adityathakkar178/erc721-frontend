@@ -1,14 +1,35 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import classes from './Form.module.css';
 import axios from 'axios';
+import Web3 from 'web3';
 
 const MintTokens = ({ contract }) => {
     const [name, setName] = useState('');
     const [uri, setUri] = useState('');
     const [image, setImage] = useState(null);
+    const [address, setAddress] = useState('');
+    const [currentAccountIndex, setCurrentAccountIndex] = useState(0);
     const [error, setError] = useState('');
+
+    useEffect(() => {
+        if (window.ethereum) {
+            const web3 = new Web3(window.ethereum);
+            window.ethereum.enable().then(() => {
+                web3.eth.getAccounts().then(async (accounts) => {
+                    setAddress(accounts);
+                    setCurrentAccountIndex(0);
+                });
+                window.ethereum.on('accountsChanged', (newAccounts) => {
+                    setAddress(newAccounts);
+                    setCurrentAccountIndex(0);
+                });
+            });
+        } else {
+            console.log('MetaMask is not installed');
+        }
+    }, []);
 
     const handleName = (e) => {
         setName(e.target.value);
@@ -48,6 +69,7 @@ const MintTokens = ({ contract }) => {
             formData.append('name', name);
             formData.append('uri', uri);
             formData.append('image', image);
+            formData.append('address', address);
             axios
                 .post('http://localhost:3004/mint', formData, {
                     headers: {
