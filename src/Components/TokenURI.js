@@ -38,7 +38,7 @@ const URI = ({ contract }) => {
                     setUri(result);
                 })
                 .catch((err) => {
-                    console.error('Error getting uri');
+                    setError('Error getting uri');
                 });
         }
     };
