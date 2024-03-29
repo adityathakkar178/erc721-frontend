@@ -134,8 +134,6 @@ const Contract = () => {
                     </Card>
                 </div>
             </div>
-
-            <NFT contract={contract} />
         </>
     );
 };

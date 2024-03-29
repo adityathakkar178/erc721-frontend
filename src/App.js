@@ -1,6 +1,9 @@
 import { useState } from 'react';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Connect from './Components/Connect';
 import Contract from './Components/Contract';
+import NFT from './Components/NFT';
+import Root from './pages/Root';
 
 function App() {
     const [isConnected, setIsConnected] = useState(false);
@@ -8,6 +11,23 @@ function App() {
     const handleConnect = () => {
         setIsConnected(true);
     };
+
+    const router = createBrowserRouter([
+        {
+            path: '/',
+            element: <Root />,
+            children: [
+                {
+                    path: '/contracts',
+                    element: <Contract />,
+                },
+                {
+                    path: '/nfts',
+                    element: <NFT />,
+                },
+            ],
+        },
+    ]);
 
     return (
         <div>
@@ -17,9 +37,7 @@ function App() {
                     onConnect={handleConnect}
                 />
             )}
-            {/* {isConnected && <Network />}
-          {isConnected && <AccountSwitcher />} */}
-            {isConnected && <Contract />}
+            {isConnected && <RouterProvider router={router} />}
         </div>
     );
 }
