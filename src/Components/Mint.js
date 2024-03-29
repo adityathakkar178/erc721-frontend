@@ -9,7 +9,7 @@ const MintTokens = ({ contract }) => {
     const [name, setName] = useState('');
     const [uri, setUri] = useState('');
     const [image, setImage] = useState(null);
-    const [address, setAddress] = useState('');
+    const [address, setAddress] = useState([]);
     const [currentAccountIndex, setCurrentAccountIndex] = useState(0);
     const [error, setError] = useState('');
 
@@ -69,7 +69,7 @@ const MintTokens = ({ contract }) => {
             formData.append('name', name);
             formData.append('uri', uri);
             formData.append('image', image);
-            formData.append('address', address);
+            formData.append('address', address[currentAccountIndex]);
             axios
                 .post('http://localhost:3004/mint', formData, {
                     headers: {
