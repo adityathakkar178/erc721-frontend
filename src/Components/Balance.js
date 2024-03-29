@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import classes from './Form.module.css';
+import style from './Button.module.css';
 
 const Balance = ({ contract }) => {
     const [address, setAddress] = useState('');
@@ -50,7 +51,9 @@ const Balance = ({ contract }) => {
                     <Form.Text className="text-danger">{error}</Form.Text>
                 )}
             </Form.Group>
-            <Button onClick={getBalance}>Get balance</Button>
+            <Button className={style.button} onClick={getBalance}>
+                Get balance
+            </Button>
             {balance !== null && balance !== '' && (
                 <h6>
                     Token Balance of {address}: {balance}

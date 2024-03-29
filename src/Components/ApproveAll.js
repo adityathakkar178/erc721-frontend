@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import classes from './Form.module.css';
+import style from './Button.module.css';
 
 const ApproveForAll = ({ contract }) => {
     const [address, setAddress] = useState('');
@@ -67,7 +68,9 @@ const ApproveForAll = ({ contract }) => {
                     onChange={handleApprove}
                 />
             </Form.Group>
-            <Button onClick={ApproveAll}>Approve</Button>
+            <Button className={style.button} onClick={ApproveAll}>
+                Approve
+            </Button>
         </Form>
     );
 };

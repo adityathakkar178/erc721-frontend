@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import classes from './Form.module.css';
+import style from './Button.module.css';
 
 const URI = ({ contract }) => {
     const [id, setId] = useState('');
@@ -66,7 +67,9 @@ const URI = ({ contract }) => {
                     <Form.Text className="text-danger">{error}</Form.Text>
                 )}
             </Form.Group>
-            <Button onClick={GetUri}>Get Owner</Button>
+            <Button className={style.button} onClick={GetUri}>
+                Get Owner
+            </Button>
             {uri !== null && uri !== '' && (
                 <h6>
                     URI of Token {id}: {uri}

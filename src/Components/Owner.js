@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import classes from './Form.module.css';
+import style from './Button.module.css';
 
 const Owner = ({ contract }) => {
     const [id, setId] = useState('');
@@ -60,7 +61,9 @@ const Owner = ({ contract }) => {
                     <Form.Text className="text-danger">{error}</Form.Text>
                 )}
             </Form.Group>
-            <Button onClick={getOwner}>Get Owner</Button>
+            <Button className={style.button} onClick={getOwner}>
+                Get Owner
+            </Button>
             {address !== null && address !== '' && (
                 <h6>
                     Owner of Token {id}: {address}

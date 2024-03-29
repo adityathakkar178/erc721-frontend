@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import classes from './Form.module.css';
+import style from './Button.module.css';
 
 const Approve = ({ contract }) => {
     const [address, setAddress] = useState('');
@@ -85,7 +86,9 @@ const Approve = ({ contract }) => {
                     <Form.Text className="text-danger">{error}</Form.Text>
                 )}
             </Form.Group>
-            <Button onClick={ApproveSpender}>Approve</Button>
+            <Button className={style.button} onClick={ApproveSpender}>
+                Approve
+            </Button>
         </Form>
     );
 };

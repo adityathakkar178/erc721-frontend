@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import classes from './Form.module.css';
+import style from './Button.module.css';
 import axios from 'axios';
 import Web3 from 'web3';
 
@@ -119,7 +120,9 @@ const MintTokens = ({ contract }) => {
                     <Form.Text className="text-danger">{error}</Form.Text>
                 )}
             </Form.Group>
-            <Button onClick={mintTokens}>Mint Tokens</Button>
+            <Button className={style.button} onClick={mintTokens}>
+                Mint Tokens
+            </Button>
         </Form>
     );
 };

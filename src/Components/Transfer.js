@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import classes from './Form.module.css';
+import style from './Button.module.css';
 
 const TransferTokens = ({ contract }) => {
     const [fromAddress, setFromAddress] = useState('');
@@ -104,7 +105,9 @@ const TransferTokens = ({ contract }) => {
                     <Form.Text className="text-danger">{error}</Form.Text>
                 )}
             </Form.Group>
-            <Button onClick={Transfer}>Mint Tokens</Button>
+            <Button className={style.button} onClick={Transfer}>
+                Mint Tokens
+            </Button>
         </Form>
     );
 };

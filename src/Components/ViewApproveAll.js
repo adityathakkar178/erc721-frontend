@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import classes from './Form.module.css';
+import style from './Button.module.css';
 
 const ViewApprove = ({ contract }) => {
     const [ownerAddress, setOwnerAddress] = useState('');
@@ -72,7 +73,9 @@ const ViewApprove = ({ contract }) => {
                     <Form.Text className="text-danger">{error}</Form.Text>
                 )}
             </Form.Group>
-            <Button onClick={checkApproval}>Check</Button>
+            <Button className={style.button} onClick={checkApproval}>
+                Check
+            </Button>
             {approved !== null &&
                 approved !== '' &&
                 operatorAddress !== null &&

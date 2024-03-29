@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import classes from './Form.module.css';
+import style from './Button.module.css';
 
 const GetApprove = ({ contract }) => {
     const [id, setId] = useState('');
@@ -62,7 +63,9 @@ const GetApprove = ({ contract }) => {
                     <Form.Text className="text-danger">{error}</Form.Text>
                 )}
             </Form.Group>
-            <Button onClick={allowance}>Get Spender</Button>
+            <Button className={style.button} onClick={allowance}>
+                Get Spender
+            </Button>
             {address !== null && address !== '' && (
                 <h6>
                     Spender of Token {id}: {address}
