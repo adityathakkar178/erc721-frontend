@@ -40,9 +40,11 @@ const NFT = () => {
                                 <Card.Title className="text-center mb-2">
                                     <strong>Name: {token.name}</strong>
                                 </Card.Title>
-                                <Card.Text className="text-center mb-2">URI: {token.uri}</Card.Text>
                                 <Card.Text className="text-center mb-2">
-                                     Address: {token.address}
+                                    URI: {token.uri}
+                                </Card.Text>
+                                <Card.Text className="text-center mb-2">
+                                    Address: {token.address}
                                 </Card.Text>
                             </Card.Body>
                         </Card>
