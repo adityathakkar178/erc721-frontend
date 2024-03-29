@@ -12,6 +12,7 @@ import ApproveForAll from './ApproveAll';
 import ViewApprove from './ViewApproveAll';
 import TransferTokens from './Transfer';
 import URI from './TokenURI';
+import NFT from './NFT';
 
 const Contract = () => {
     const [abi, setAbi] = useState('');
@@ -62,7 +63,7 @@ const Contract = () => {
 
     return (
         <>
-            <h3>ERC721 Contract</h3>
+            <h3 className="text-center mt-4 mb-4">ERC721 Contract</h3>
 
             <div className="row">
                 <div className="col-md-4">
@@ -133,6 +134,8 @@ const Contract = () => {
                     </Card>
                 </div>
             </div>
+
+            <NFT contract={contract} />
         </>
     );
 };
