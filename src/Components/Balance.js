@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import {Form, Button} from 'react-bootstrap';
+import { Form, Button } from 'react-bootstrap';
 import classes from './Form.module.css';
 import style from './Button.module.css';
 
@@ -20,20 +20,19 @@ const Balance = ({ contract }) => {
         setError('');
     };
 
-    const getBalance = () => {
+    const getBalance = async () => {
         if (!isValidAddress(address)) {
             setError('Invalid Address');
             return;
         }
-        contract
-            .balanceOf(address)
-            .then((balance) => {
-                setBalance(balance.toString());
-            })
-            .catch((err) => {
-                setError('Balance Does not exists for this address');
-            });
+        try {
+            const balance = await contract.balanceOf(address);
+            setBalance(balance.toString());
+        } catch (err) {
+            setError('Balance Does not exist for this address');
+        }
     };
+
     return (
         <Form className={classes.form}>
             <h3>Check Balance</h3>
