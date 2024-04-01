@@ -65,10 +65,12 @@ const NFT = () => {
                                 </div>
                                 <Card.Body>
                                     <Card.Title className="text-center mb-2">
-                                        <strong>
-                                            Name:
-                                            {token.metadata.name}
-                                        </strong>
+                                        <h6>
+                                            <strong>
+                                                Name:
+                                                {token.metadata.name}
+                                            </strong>
+                                        </h6>
                                     </Card.Title>
                                     <Card.Text className="text-center mb-2">
                                         Description:
