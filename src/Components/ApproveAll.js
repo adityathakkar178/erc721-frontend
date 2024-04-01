@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import {Form, Button} from 'react-bootstrap';
+import { Form, Button } from 'react-bootstrap';
 import classes from './Form.module.css';
 import style from './Button.module.css';
 
@@ -29,16 +29,17 @@ const ApproveForAll = ({ contract }) => {
         setError('');
     };
 
-    const ApproveAll = () => {
+    const ApproveAll = async () => {
         if (validateInputs()) {
-            contract
-                .setApprovalForAll(address, approve)
-                .then((transaction) => {
-                    setTransaction(transaction.hash);
-                })
-                .catch((err) => {
-                    setError('Error approving tokens');
-                });
+            try {
+                const transaction = await contract.setApprovalForAll(
+                    address,
+                    approve
+                );
+                setTransaction(transaction.hash);
+            } catch (err) {
+                setError('Error approving tokens');
+            }
         }
     };
 
