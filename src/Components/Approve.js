@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import {Form, Button} from 'react-bootstrap';
+import { Form, Button } from 'react-bootstrap';
 import classes from './Form.module.css';
 import style from './Button.module.css';
 
@@ -39,16 +39,14 @@ const Approve = ({ contract }) => {
         setError('');
     };
 
-    const ApproveSpender = () => {
+    const ApproveSpender = async () => {
         if (validateInputs()) {
-            contract
-                .approve(address, id)
-                .then((transaction) => {
-                    setTransaction(transaction.hash);
-                })
-                .catch((err) => {
-                    setError('Error approving spender');
-                });
+            try {
+                const transaction = await contract.approve(address, id);
+                setTransaction(transaction.hash);
+            } catch (err) {
+                setError('Error approving spender');
+            }
         }
     };
 
