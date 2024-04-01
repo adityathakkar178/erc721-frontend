@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
+import {Form, Button} from 'react-bootstrap';
 import classes from './Form.module.css';
 import style from './Button.module.css';
 import axios from 'axios';
