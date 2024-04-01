@@ -34,7 +34,7 @@ const Owner = ({ contract }) => {
                 setAddress(owner);
             })
             .catch((err) => {
-                setError('Error fetching owner. Please try again.');
+                setError('Token Id does not exists. Please enter valid id.');
             });
     };
 
@@ -65,7 +65,7 @@ const Owner = ({ contract }) => {
                 Get Owner
             </Button>
             {address !== null && address !== '' && (
-                <h6>
+                <h6 className="mt-2">
                     Owner of Token {id}: {address}
                 </h6>
             )}
