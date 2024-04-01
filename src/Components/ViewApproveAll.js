@@ -82,7 +82,7 @@ const ViewApprove = ({ contract }) => {
                 operatorAddress !== '' &&
                 ownerAddress !== null &&
                 ownerAddress !== '' && (
-                    <h6>
+                    <h6 className="mt-2">
                         Operator {operatorAddress} {approved ? 'is' : 'is not'}{' '}
                         approved for all tokens by owner {ownerAddress}
                     </h6>
