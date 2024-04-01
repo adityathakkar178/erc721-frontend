@@ -10,17 +10,41 @@ const NFT = () => {
         axios
             .get('http://localhost:3004/nft')
             .then((response) => {
-                setTokens(response.data);
+                Promise.all(response.data.map(fetchTokenMetadata))
+                    .then((tokenData) => {
+                        setTokens(tokenData);
+                    })
+                    .catch((error) => {
+                        console.error('Error fetching token metadata:', error);
+                    });
             })
             .catch((error) => {
                 console.error('Error fetching tokens:', error);
             });
     }, []);
 
+    const fetchTokenMetadata = async (token) => {
+        try {
+            const cid = token.uri.split('ipfs://')[1];
+            const response = await axios.get(`https://ipfs.io/ipfs/${cid}`);
+            const metadata = response.data;
+            return {
+                ...token,
+                metadata: metadata,
+            };
+        } catch (error) {
+            console.error('Error fetching metadata for token:', token, error);
+            return {
+                ...token,
+                metadata: null,
+            };
+        }
+    };
+
     return (
         <>
             <h3 className="text-center mt-4 mb-4">Token List</h3>
-            <Container fluid='xl'>
+            <Container fluid>
                 <Row className="justify-content-center">
                     {tokens.map((token) => (
                         <Col key={token._id}>
@@ -28,7 +52,10 @@ const NFT = () => {
                                 <div className="text-center">
                                     <Card.Img
                                         variant="top"
-                                        src={`http://localhost:3004/uploads/${token.image}`}
+                                        src={
+                                            token.metadata &&
+                                            token.metadata.image
+                                        }
                                         alt={token.name}
                                         style={{
                                             height: '200px',
@@ -39,13 +66,16 @@ const NFT = () => {
                                 </div>
                                 <Card.Body>
                                     <Card.Title className="text-center mb-2">
-                                        <strong>Name: {token.name}</strong>
+                                        <strong>
+                                            Name:{' '}
+                                            {token.metadata &&
+                                                token.metadata.name}
+                                        </strong>
                                     </Card.Title>
                                     <Card.Text className="text-center mb-2">
-                                        URI: {token.uri}
-                                    </Card.Text>
-                                    <Card.Text className="text-center mb-2">
-                                        Address: {token.address}
+                                        Description:{' '}
+                                        {token.metadata &&
+                                            token.metadata.description}
                                     </Card.Text>
                                 </Card.Body>
                             </Card>
