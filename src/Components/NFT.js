@@ -26,7 +26,7 @@ const NFT = () => {
     const fetchTokenMetadata = async (token) => {
         try {
             const cid = token.uri.split('ipfs://')[1];
-            const response = await axios.get(`https://ipfs.io/ipfs/${cid}`);
+            const response = await axios.get(`https://gateway.pinata.cloud/ipfs/${cid}`);
             const metadata = response.data;
             return {
                 ...token,
