@@ -26,7 +26,9 @@ const NFT = () => {
     const fetchTokenMetadata = async (token) => {
         try {
             const cid = token.uri.split('ipfs://')[1];
-            const response = await axios.get(`https://gateway.pinata.cloud/ipfs/${cid}`);
+            const response = await axios.get(
+                `https://gateway.pinata.cloud/ipfs/${cid}`
+            );
             const metadata = response.data;
             return {
                 ...token,
@@ -52,10 +54,7 @@ const NFT = () => {
                                 <div className="text-center">
                                     <Card.Img
                                         variant="top"
-                                        src={
-                                            token.metadata &&
-                                            token.metadata.image
-                                        }
+                                        src={token.metadata.image}
                                         alt={token.name}
                                         style={{
                                             height: '200px',
@@ -67,15 +66,13 @@ const NFT = () => {
                                 <Card.Body>
                                     <Card.Title className="text-center mb-2">
                                         <strong>
-                                            Name:{' '}
-                                            {token.metadata &&
-                                                token.metadata.name}
+                                            Name:
+                                            {token.metadata.name}
                                         </strong>
                                     </Card.Title>
                                     <Card.Text className="text-center mb-2">
-                                        Description:{' '}
-                                        {token.metadata &&
-                                            token.metadata.description}
+                                        Description:
+                                        {token.metadata.description}
                                     </Card.Text>
                                 </Card.Body>
                             </Card>
