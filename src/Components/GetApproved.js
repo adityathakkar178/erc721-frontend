@@ -36,7 +36,7 @@ const GetApprove = ({ contract }) => {
             })
             .catch((err) => {
                 console.error('Error getting spender', err);
-                setError('Error fetching spender. Please try again.');
+                setError('Token Id does not exists. Please enter valid id.');
             });
     };
 
@@ -67,7 +67,7 @@ const GetApprove = ({ contract }) => {
                 Get Spender
             </Button>
             {address !== null && address !== '' && (
-                <h6>
+                <h6 className="mt-2">
                     Spender of Token {id}: {address}
                 </h6>
             )}
