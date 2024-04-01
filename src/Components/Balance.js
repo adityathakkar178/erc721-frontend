@@ -32,7 +32,7 @@ const Balance = ({ contract }) => {
                 setBalance(balance.toString());
             })
             .catch((err) => {
-                setError('Error Fetching Balance');
+                setError('Balance Does not exists for this address');
             });
     };
     return (
@@ -55,7 +55,7 @@ const Balance = ({ contract }) => {
                 Get balance
             </Button>
             {balance !== null && balance !== '' && (
-                <h6>
+                <h6 className="mt-2">
                     Token Balance of {address}: {balance}
                 </h6>
             )}
