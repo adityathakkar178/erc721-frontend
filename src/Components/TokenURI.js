@@ -39,7 +39,9 @@ const URI = ({ contract }) => {
                     setUri(result);
                 })
                 .catch((err) => {
-                    setError('Error getting uri');
+                    setError(
+                        'Token Id does not exists. Please enter valid id.'
+                    );
                 });
         }
     };
@@ -71,7 +73,7 @@ const URI = ({ contract }) => {
                 Get Owner
             </Button>
             {uri !== null && uri !== '' && (
-                <h6>
+                <h6 className="mt-2">
                     URI of Token {id}: {uri}
                 </h6>
             )}
