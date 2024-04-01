@@ -1,35 +1,33 @@
-import { Link } from 'react-router-dom';
-import classes from './Navigation.module.css';
+import { Link, useLocation } from 'react-router-dom';
+import { Navbar, Nav } from 'react-bootstrap';
 
 const Navigation = () => {
+    const location = useLocation();
+
     return (
-        <header className={classes.header}>
-            <nav className={classes.navbar}>
-                <ul className={classes.list}>
-                    <li>
-                        <Link
-                            to="/contracts"
-                            className={({ isActive }) =>
-                                isActive ? classes.active : undefined
-                            }
-                            end
-                        >
-                            Contract
-                        </Link>
-                    </li>
-                    <li>
-                        <Link
-                            to="/nfts"
-                            className={({ isActive }) =>
-                                isActive ? classes.active : undefined
-                            }
-                        >
-                            NFT{' '}
-                        </Link>
-                    </li>
-                </ul>
-            </nav>
-        </header>
+        <Navbar bg="dark" variant="dark" expand="lg" className="header">
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Collapse id="basic-navbar-nav">
+                <Nav className="mr-auto list" style={{ margin: '0 auto' }}>
+                    <Nav.Link
+                        as={Link}
+                        to="/"
+                        className={location.pathname === '/' ? 'active' : ''}
+                    >
+                        Contract
+                    </Nav.Link>
+                    <Nav.Link
+                        as={Link}
+                        to="/nfts"
+                        className={
+                            location.pathname === '/nfts' ? 'active' : ''
+                        }
+                    >
+                        NFT
+                    </Nav.Link>
+                </Nav>
+            </Navbar.Collapse>
+        </Navbar>
     );
 };
 
