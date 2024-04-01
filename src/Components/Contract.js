@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { ethers } from 'ethers';
-import Card from 'react-bootstrap/Card';
+import { Container, Card, Col, Row } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Balance from './Balance';
 import MintTokens from './Mint';
@@ -12,7 +12,6 @@ import ApproveForAll from './ApproveAll';
 import ViewApprove from './ViewApproveAll';
 import TransferTokens from './Transfer';
 import URI from './TokenURI';
-import NFT from './NFT';
 
 const Contract = () => {
     const [abi, setAbi] = useState('');
@@ -46,7 +45,7 @@ const Contract = () => {
                     const signer = provider.getSigner();
                     console.log(signer.getAddress());
                     const contractAddress =
-                        '0x5fbdb2315678afecb367f032d93f642f64180aa3';
+                        '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512';
                     const contract = new ethers.Contract(
                         contractAddress,
                         abi,
@@ -64,76 +63,77 @@ const Contract = () => {
     return (
         <>
             <h3 className="text-center mt-4 mb-4">ERC721 Contract</h3>
-
-            <div className="row">
-                <div className="col-md-4">
-                    <Card className="border-0">
-                        <Card.Body>
-                            <Balance contract={contract} />
-                        </Card.Body>
-                    </Card>
-                </div>
-                <div className="col-md-3">
-                    <Card className="border-0">
-                        <Card.Body>
-                            <Owner contract={contract} />
-                        </Card.Body>
-                    </Card>
-                </div>
-                <div className="col-md-4">
-                    <Card className="border-0">
-                        <Card.Body>
-                            <GetApprove contract={contract} />
-                        </Card.Body>
-                    </Card>
-                </div>
-            </div>
-            <div className="row">
-                <div className="col-md-4">
-                    <Card className="border-0">
-                        <Card.Body>
-                            <Approve contract={contract} />
-                        </Card.Body>
-                    </Card>
-                </div>
-                <div className="col-md-3">
-                    <Card className="border-0">
-                        <Card.Body>
-                            <ViewApprove contract={contract} />
-                        </Card.Body>
-                    </Card>
-                </div>
-                <div className="col-md-4">
-                    <Card className="border-0">
-                        <Card.Body>
-                            <ApproveForAll contract={contract} />
-                        </Card.Body>
-                    </Card>
-                </div>
-            </div>
-            <div className="row">
-                <div className="col-md-4">
-                    <Card className="border-0">
-                        <Card.Body>
-                            <MintTokens contract={contract} />
-                        </Card.Body>
-                    </Card>
-                </div>
-                <div className="col-md-3">
-                    <Card className="border-0">
-                        <Card.Body>
-                            <TransferTokens contract={contract} />
-                        </Card.Body>
-                    </Card>
-                </div>
-                <div className="col-md-4">
-                    <Card className="border-0">
-                        <Card.Body>
-                            <URI contract={contract} />
-                        </Card.Body>
-                    </Card>
-                </div>
-            </div>
+            <Container fluid>
+                <Row className="justify-content-center">
+                    <Col>
+                        <Card className="border-0">
+                            <Card.Body>
+                                <Balance contract={contract} />
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                    <Col>
+                        <Card className="border-0">
+                            <Card.Body>
+                                <Owner contract={contract} />
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                    <Col>
+                        <Card className="border-0">
+                            <Card.Body>
+                                <GetApprove contract={contract} />
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                </Row>
+                <Row className="justify-content-center">
+                    <Col>
+                        <Card className="border-0">
+                            <Card.Body>
+                                <Approve contract={contract} />
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                    <Col>
+                        <Card className="border-0">
+                            <Card.Body>
+                                <ViewApprove contract={contract} />
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                    <Col>
+                        <Card className="border-0">
+                            <Card.Body>
+                                <ApproveForAll contract={contract} />
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                </Row>
+                <Row className="justify-content-center">
+                    <Col>
+                        <Card className="border-0">
+                            <Card.Body>
+                                <MintTokens contract={contract} />
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                    <Col>
+                        <Card className="border-0">
+                            <Card.Body>
+                                <TransferTokens contract={contract} />
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                    <Col>
+                        <Card className="border-0">
+                            <Card.Body>
+                                <URI contract={contract} />
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                </Row>
+            </Container>
         </>
     );
 };
