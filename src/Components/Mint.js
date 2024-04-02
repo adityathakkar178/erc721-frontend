@@ -6,7 +6,7 @@ import style from './Button.module.css';
 import axios from 'axios';
 import Web3 from 'web3';
 
-const MintTokens = () => {
+const MintTokens = ({ contract }) => {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [imageLink, setImageLink] = useState('');
@@ -66,15 +66,15 @@ const MintTokens = () => {
 
     const mintTokens = async () => {
         if (validateInputs()) {
-            const metadata = {
-                name,
-                description,
-                image: imageLink,
-                address: address[currentAccountIndex],
-            };
-
             try {
-                await axios.post(
+                const metadata = {
+                    name: name,
+                    description,
+                    image: imageLink,
+                    address: address[currentAccountIndex],
+                };
+
+                const pinataResponse = await axios.post(
                     'https://api.pinata.cloud/pinning/pinJSONToIPFS',
                     metadata,
                     {
@@ -86,12 +86,20 @@ const MintTokens = () => {
                         },
                     }
                 );
+
+                const cid = pinataResponse.data.IpfsHash;
+                const response = await axios.get(
+                    `https://gateway.pinata.cloud/ipfs/${cid}`
+                );
+
+                await contract.mint(name, `ipfs://${cid}`);
+
                 setName('');
                 setDescription('');
                 setImageLink('');
                 setError('');
             } catch (error) {
-                console.error('Error pinning metadata to IPFS:', error);
+                console.error('Error minting tokens:', error);
                 setError('Error minting tokens');
             }
         }
