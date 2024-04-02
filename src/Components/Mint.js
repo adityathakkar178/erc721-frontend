@@ -1,13 +1,15 @@
-import { useEffect, useState } from 'react';
-import { Form, Button } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 import classes from './Form.module.css';
 import style from './Button.module.css';
 import axios from 'axios';
 import Web3 from 'web3';
 
-const MintTokens = ({ contract }) => {
+const MintTokens = () => {
     const [name, setName] = useState('');
-    const [uri, setUri] = useState('');
+    const [description, setDescription] = useState('');
+    const [imageLink, setImageLink] = useState('');
     const [address, setAddress] = useState([]);
     const [currentAccountIndex, setCurrentAccountIndex] = useState(0);
     const [error, setError] = useState('');
@@ -34,8 +36,12 @@ const MintTokens = ({ contract }) => {
         setName(e.target.value);
     };
 
-    const handleUri = (e) => {
-        setUri(e.target.value);
+    const handleDescription = (e) => {
+        setDescription(e.target.value);
+    };
+
+    const handleImageLink = (e) => {
+        setImageLink(e.target.value);
     };
 
     const validateInputs = () => {
@@ -43,8 +49,12 @@ const MintTokens = ({ contract }) => {
             setError('Name cannot be empty');
             return false;
         }
-        if (!uri.trim()) {
-            setError('URI cannot be empty');
+        if (!description.trim()) {
+            setError('Description cannot be empty');
+            return false;
+        }
+        if (!imageLink.trim()) {
+            setError('Image link cannot be empty');
             return false;
         }
         return true;
@@ -54,24 +64,36 @@ const MintTokens = ({ contract }) => {
         setError('');
     };
 
-    const mintTokens = () => {
+    const mintTokens = async () => {
         if (validateInputs()) {
-            const formData = new FormData();
-            formData.append('name', name);
-            formData.append('uri', uri);
-            formData.append('address', address[currentAccountIndex]);
-            axios
-                .post('http://localhost:3004/mint', formData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                    },
-                })
-                .then(() => {
-                    return contract.mint(name, uri);
-                })
-                .catch((error) => {
-                    setError('Error minting tokens');
-                });
+            const metadata = {
+                name,
+                description,
+                image: imageLink,
+                address: address[currentAccountIndex],
+            };
+
+            try {
+                await axios.post(
+                    'https://api.pinata.cloud/pinning/pinJSONToIPFS',
+                    metadata,
+                    {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            pinata_api_key: 'a8bd0c03d1195c3d2d7b',
+                            pinata_secret_api_key:
+                                '3de90fbbc2eedb0609c0ce2528098b7f86396c8b44670e5a5612049ba4ffd8dc',
+                        },
+                    }
+                );
+                setName('');
+                setDescription('');
+                setImageLink('');
+                setError('');
+            } catch (error) {
+                console.error('Error pinning metadata to IPFS:', error);
+                setError('Error minting tokens');
+            }
         }
     };
 
@@ -88,20 +110,27 @@ const MintTokens = ({ contract }) => {
                     onFocus={clearError}
                 />
             </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicURI">
-                <Form.Label>Enter URI</Form.Label>
+            <Form.Group className="mb-3" controlId="formBasicDescription">
+                <Form.Label>Enter Description</Form.Label>
                 <Form.Control
                     type="text"
-                    placeholder="Enter URI"
-                    value={uri}
-                    onChange={handleUri}
+                    placeholder="Enter Description"
+                    value={description}
+                    onChange={handleDescription}
                     onFocus={clearError}
                 />
-                {error && (
-                    <Form.Text className="text-danger">{error}</Form.Text>
-                )}
             </Form.Group>
-
+            <Form.Group className="mb-3" controlId="formBasicImageLink">
+                <Form.Label>Image Link</Form.Label>
+                <Form.Control
+                    type="text"
+                    placeholder="Enter Image Link"
+                    value={imageLink}
+                    onChange={handleImageLink}
+                    onFocus={clearError}
+                />
+            </Form.Group>
+            {error && <Form.Text className="text-danger">{error}</Form.Text>}
             <Button className={style.button} onClick={mintTokens}>
                 Mint Tokens
             </Button>
