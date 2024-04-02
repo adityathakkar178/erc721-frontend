@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import {Form, Button} from 'react-bootstrap';
+import { Form, Button } from 'react-bootstrap';
 import classes from './Form.module.css';
 import style from './Button.module.css';
 import axios from 'axios';
@@ -97,7 +97,11 @@ const MintTokens = ({ contract }) => {
                     onChange={handleUri}
                     onFocus={clearError}
                 />
+                {error && (
+                    <Form.Text className="text-danger">{error}</Form.Text>
+                )}
             </Form.Group>
+
             <Button className={style.button} onClick={mintTokens}>
                 Mint Tokens
             </Button>
