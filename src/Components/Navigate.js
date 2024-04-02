@@ -16,7 +16,7 @@ const Navigation = () => {
                     >
                         Contract
                     </Nav.Link>
-                    <Nav.Link
+                    {/* <Nav.Link
                         as={Link}
                         to="/nfts"
                         className={
@@ -24,7 +24,7 @@ const Navigation = () => {
                         }
                     >
                         NFT
-                    </Nav.Link>
+                    </Nav.Link> */}
                 </Nav>
             </Navbar.Collapse>
         </Navbar>

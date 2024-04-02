@@ -26,7 +26,7 @@ function App() {
                         <Navigation />
                         <Routes>
                             <Route path="/" element={<Contract />} />
-                            <Route path="/nfts" element={<NFT />} />
+                            {/* <Route path="/nfts" element={<NFT />} /> */}
                         </Routes>
                     </>
                 )}
