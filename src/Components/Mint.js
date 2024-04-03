@@ -68,46 +68,19 @@ const MintTokens = ({ contract }) => {
         if (validateInputs()) {
             try {
                 const formData = new FormData();
-                formData.append('file', imageFile);
+                formData.append('image', imageFile); 
+                formData.append('name', name);
+                formData.append('description', description);
+                formData.append('address', address[currentAccountIndex]);
 
-                const pinataResponse = await axios.post(
-                    'https://api.pinata.cloud/pinning/pinFileToIPFS',
-                    formData,
-                    {
-                        headers: {
-                            'Content-Type': 'multipart/form-data',
-                            pinata_api_key: 'a8bd0c03d1195c3d2d7b',
-                            pinata_secret_api_key:
-                                '3de90fbbc2eedb0609c0ce2528098b7f86396c8b44670e5a5612049ba4ffd8dc',
-                        },
-                    }
-                );
+                const response = await axios.post('http://localhost:3004/mint', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                });
 
-                const imageLink = `https://gateway.pinata.cloud/ipfs/${pinataResponse.data.IpfsHash}`;
-
-                const metadata = {
-                    name: name,
-                    description,
-                    image: imageLink,
-                    address: address[currentAccountIndex],
-                };
-
-                const metadataPinataResponse = await axios.post(
-                    'https://api.pinata.cloud/pinning/pinJSONToIPFS',
-                    metadata,
-                    {
-                        headers: {
-                            'Content-Type': 'application/json',
-                            pinata_api_key: 'a8bd0c03d1195c3d2d7b',
-                            pinata_secret_api_key:
-                                '3de90fbbc2eedb0609c0ce2528098b7f86396c8b44670e5a5612049ba4ffd8dc',
-                        },
-                    }
-                );
-
-                const cid = metadataPinataResponse.data.IpfsHash;
-
-                await contract.mint(name, `ipfs://${cid}`);
+                const { metadataCID } = response.data;
+                await contract.mint(name, `ipfs://${metadataCID}`);
 
                 setName('');
                 setDescription('');

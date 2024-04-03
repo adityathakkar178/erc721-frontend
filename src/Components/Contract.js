@@ -45,7 +45,7 @@ const Contract = () => {
                     const signer = provider.getSigner();
                     console.log(signer.getAddress());
                     const contractAddress =
-                        '0x6AF666383a1BD1A15F3a7fFf7e6f3CD6067e5C91';
+                        '0xEF0F5685ED18720Df4F61f6A5d88B4C60BE8e0cd';
                     const contract = new ethers.Contract(
                         contractAddress,
                         abi,
