@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import classes from './Form.module.css';
@@ -9,7 +9,7 @@ import Web3 from 'web3';
 const MintTokens = ({ contract }) => {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
-    const [imageLink, setImageLink] = useState('');
+    const [imageFile, setImageFile] = useState(null);
     const [address, setAddress] = useState([]);
     const [currentAccountIndex, setCurrentAccountIndex] = useState(0);
     const [error, setError] = useState('');
@@ -40,8 +40,8 @@ const MintTokens = ({ contract }) => {
         setDescription(e.target.value);
     };
 
-    const handleImageLink = (e) => {
-        setImageLink(e.target.value);
+    const handleImageUpload = (e) => {
+        setImageFile(e.target.files[0]);
     };
 
     const validateInputs = () => {
@@ -53,8 +53,8 @@ const MintTokens = ({ contract }) => {
             setError('Description cannot be empty');
             return false;
         }
-        if (!imageLink.trim()) {
-            setError('Image link cannot be empty');
+        if (!imageFile) {
+            setError('Please upload an image');
             return false;
         }
         return true;
@@ -67,6 +67,24 @@ const MintTokens = ({ contract }) => {
     const mintTokens = async () => {
         if (validateInputs()) {
             try {
+                const formData = new FormData();
+                formData.append('file', imageFile);
+
+                const pinataResponse = await axios.post(
+                    'https://api.pinata.cloud/pinning/pinFileToIPFS',
+                    formData,
+                    {
+                        headers: {
+                            'Content-Type': 'multipart/form-data',
+                            pinata_api_key: 'a8bd0c03d1195c3d2d7b',
+                            pinata_secret_api_key:
+                                '3de90fbbc2eedb0609c0ce2528098b7f86396c8b44670e5a5612049ba4ffd8dc',
+                        },
+                    }
+                );
+
+                const imageLink = `https://gateway.pinata.cloud/ipfs/${pinataResponse.data.IpfsHash}`;
+
                 const metadata = {
                     name: name,
                     description,
@@ -74,7 +92,7 @@ const MintTokens = ({ contract }) => {
                     address: address[currentAccountIndex],
                 };
 
-                const pinataResponse = await axios.post(
+                const metadataPinataResponse = await axios.post(
                     'https://api.pinata.cloud/pinning/pinJSONToIPFS',
                     metadata,
                     {
@@ -87,16 +105,13 @@ const MintTokens = ({ contract }) => {
                     }
                 );
 
-                const cid = pinataResponse.data.IpfsHash;
-                const response = await axios.get(
-                    `https://gateway.pinata.cloud/ipfs/${cid}`
-                );
+                const cid = metadataPinataResponse.data.IpfsHash;
 
                 await contract.mint(name, `ipfs://${cid}`);
 
                 setName('');
                 setDescription('');
-                setImageLink('');
+                setImageFile(null);
                 setError('');
             } catch (error) {
                 console.error('Error minting tokens:', error);
@@ -128,13 +143,11 @@ const MintTokens = ({ contract }) => {
                     onFocus={clearError}
                 />
             </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicImageLink">
-                <Form.Label>Image Link</Form.Label>
+            <Form.Group className="mb-3" controlId="formBasicImageUpload">
+                <Form.Label>Upload Image</Form.Label>
                 <Form.Control
-                    type="text"
-                    placeholder="Enter Image Link"
-                    value={imageLink}
-                    onChange={handleImageLink}
+                    type="file"
+                    onChange={handleImageUpload}
                     onFocus={clearError}
                 />
             </Form.Group>
