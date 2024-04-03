@@ -10,38 +10,12 @@ const NFT = () => {
         axios
             .get('http://localhost:3004/nft')
             .then((response) => {
-                Promise.all(response.data.map(fetchTokenMetadata))
-                    .then((tokenData) => {
-                        setTokens(tokenData);
-                    })
-                    .catch((error) => {
-                        console.error('Error fetching token metadata:', error);
-                    });
+                setTokens(response.data);
             })
             .catch((error) => {
                 console.error('Error fetching tokens:', error);
             });
     }, []);
-
-    const fetchTokenMetadata = async (token) => {
-        try {
-            const cid = token.uri.split('ipfs://')[1];
-            const response = await axios.get(
-                `https://gateway.pinata.cloud/ipfs/${cid}`
-            );
-            const metadata = response.data;
-            return {
-                ...token,
-                metadata: metadata,
-            };
-        } catch (error) {
-            console.error('Error fetching metadata for token:', token, error);
-            return {
-                ...token,
-                metadata: null,
-            };
-        }
-    };
 
     return (
         <>
@@ -54,7 +28,7 @@ const NFT = () => {
                                 <div className="text-center">
                                     <Card.Img
                                         variant="top"
-                                        src={token.metadata.image}
+                                        src={token.image}
                                         alt={token.name}
                                         style={{
                                             height: '200px',
@@ -66,15 +40,14 @@ const NFT = () => {
                                 <Card.Body>
                                     <Card.Title className="text-center mb-2">
                                         <h6>
-                                            <strong>
-                                                Name:
-                                                {token.metadata.name}
-                                            </strong>
+                                            <strong>Name: {token.name}</strong>
                                         </h6>
                                     </Card.Title>
                                     <Card.Text className="text-center mb-2">
-                                        Description:
-                                        {token.metadata.description}
+                                        Description: {token.description}
+                                    </Card.Text>
+                                    <Card.Text className="text-center mb-2">
+                                        Address: {token.address}
                                     </Card.Text>
                                 </Card.Body>
                             </Card>
